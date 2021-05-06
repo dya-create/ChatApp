@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JMenu;
 
 import javax.swing.*;
 import static java.lang.System.*;
@@ -35,15 +36,15 @@ public class Client extends JFrame {
         try{
             //request
             System.out.println("Sending request to server");
-            socket = new Socket("127.0.0.1",7740); // ip addresss port number? server on same computer..creating a socket
+            socket = new Socket("127.0.0.1",7753); // ip addresss port number? server on same computer..creating a socket
 
             System.out.println("Connection sucessful:"); // success message 
 
-            //reading data 
+            //reading data obtainer from the client socket
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             //writing data
-            writer = new PrintWriter(socket.getOutputStream());
+            writer = new PrintWriter(socket.getOutputStream(),true);
 
             showGUI(); // method to create GUI 
             manageEvents();// event handling 
@@ -93,7 +94,7 @@ public class Client extends JFrame {
     }
 
     //GUI method
-    private void showGUI(){  
+    private void showGUI (){  
 
         this.setTitle("Client Messenger");
         this.setSize(500,500);
@@ -101,6 +102,10 @@ public class Client extends JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+            
+
+        JOptionPane.showMessageDialog(this, "This is a ChatApp between a Client and Server that are under same Network.\n There are two developmement needed to run this app, Client.java, Server.java. \nClients chat is GUI based while server\n is console based.  \nPlease make sure that IP address and port numbers are correct.\n Make sure that port numbers are same and change them to test the app faster.");
+    
         // label font
         heading.setFont(font);
         messageArea.setFont(font);
@@ -127,6 +132,11 @@ public class Client extends JFrame {
         
     }
 
+    public void actionPerformed(ActionEvent e){
+        JOptionPane.showMessageDialog(this,"Diya", "hi",JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    
 
     //reading from client side
     public void Reading(){
@@ -153,7 +163,7 @@ public class Client extends JFrame {
                     }
                     System.out.println();
                     System.out.println("Server: " +msg);
-                messageArea.append("Server: "+ msg + "\n"); //not working - dp
+                    messageArea.append("Server: "+ msg + "\n"); //not working - dp
             }
 
 
@@ -199,8 +209,6 @@ public class Client extends JFrame {
     public static void main(String[]args){
         System.out.println("This is client: ");
         new Client();
-
-
     
     }
 }
